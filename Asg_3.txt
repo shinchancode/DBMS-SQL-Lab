@@ -1,0 +1,75 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+
+Create table with primary key and foreign key constraint.
+a Alter table with add and modify 
+b. Drop Table
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> create table Department(DID int primary key, dname varchar(20));
+Query OK, 0 rows affected (0.48 sec)
+
+mysql> create table Project(P_Id int primary key, Pname varchar(20), LocationId int);
+Query OK, 0 rows affected (0.52 sec)
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.45 sec)
+
+mysql> drop table Project;
+Query OK, 0 rows affected (0.48 sec)
+
+mysql> drop table department;
+Query OK, 0 rows affected (0.39 sec)
+
+mysql> create table Department(did int primary key, dname varchar(20));
+Query OK, 0 rows affected (0.79 sec)
+
+mysql> create table Employee(empid int primary key auto_increment, ename varchar(20) not null, contactno int unique, salary int, did int, check (salary>15000), foreign key(did) references Department(did));
+Query OK, 0 rows affected (0.60 sec)
+
+mysql> create table Project(Pid int primary key, Pname varchar(20), LocationId int);
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> alter table Employee add Pid int;
+Query OK, 0 rows affected (0.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Employee;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| empid     | int         | NO   | PRI | NULL    | auto_increment |
+| ename     | varchar(20) | NO   |     | NULL    |                |
+| contactno | int         | YES  | UNI | NULL    |                |
+| salary    | int         | YES  |     | NULL    |                |
+| did       | int         | YES  | MUL | NULL    |                |
+| Pid       | int         | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.29 sec)
+
+mysql> alter table Employee add foreign key(Pid) references Project(Pid);
+Query OK, 0 rows affected (3.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Project drop LocationId;
+Query OK, 0 rows affected (1.48 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Project modify Pname varchar(50);
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table Emp(empid int, name varchar(20), primary key(empid, name));
+Query OK, 0 rows affected (0.93 sec)
+
+mysql> desc Emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| empid | int         | NO   | PRI | NULL    |       |
+| name  | varchar(20) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)

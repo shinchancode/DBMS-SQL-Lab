@@ -1,0 +1,201 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+Write a PL/SQL block to implement all types of Cursors.
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> use mydb;
+Database changed
+mysql> select * from employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  25418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (1.16 sec)
+
+mysql> delimiter $$
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected, 1 warning (0.59 sec)
+
+mysql> create procedure empcursor()
+    -> begin
+    -> declare empid int;
+    -> declare salary int;
+    -> declare flag int default 0;
+    -> declare c1 cursor for select empid, salary from employee;
+    -> declare continue handler for not found set flag=1;
+    -> open c1;
+    -> fetch c1 into empid, salary;
+    -> select empid, salary;
+    -> close c1;
+    -> end$$
+Query OK, 0 rows affected (0.54 sec)
+
+mysql> call empcursor()$$
++-------+--------+
+| empid | salary |
++-------+--------+
+|  NULL |   NULL |
++-------+--------+
+1 row in set (0.15 sec)
+
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> delimiter $$
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected, 1 warning (0.19 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql> create procedure empcursor()
+    -> begin
+    -> declare id int;
+    -> declare sal int;
+    -> declare flag int default 0;
+    -> declare c1 cursor for select empid, salary from employee;
+    -> declare continue handler for not found set flag=1;
+    -> open c1;
+    -> fetch c1 into id, sal;
+    -> select id, sal;
+    -> close c1;
+    -> end$$
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> call empcursor()$$
++------+-------+
+| id   | sal   |
++------+-------+
+| 1256 | 17025 |
++------+-------+
+1 row in set (0.28 sec)
+
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> create procedure empcursor()
+    -> begin
+    -> declare id int;
+    -> declare sal int;
+    -> declare flag int default 0;
+    -> declare c1 cursor for select empid, salary from employee;
+    -> declare continue handler for not found set flag=1;
+    -> open c1;
+    -> fetch c1 into id, sal;
+    -> if sal<22000 then
+    -> select 'Class A';
+    -> end if;
+    -> close c1;
+    -> end$$
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> call empcursor()$$
++---------+
+| Class A |
++---------+
+| Class A |
++---------+
+1 row in set (0.03 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected, 1 warning (0.16 sec)
+
+mysql> create procedure empcursor()
+    -> begin
+    -> declare id int;
+    -> declare sal int;
+    -> declare flag int default 0;
+    -> declare c1 cursor for select empid, salary from employee;
+    -> declare continue handler for not found set flag=1;
+    -> open c1;
+    -> emp_loop :  loop
+    -> Fetch c1 into id,sal;
+    -> If flag = 1 then
+    -> Leave emp_loop;
+    -> End if;
+    -> if esal < 22000 then
+    -> select 'C Class';
+    -> elseif esal > 22000 and esal < 25000 then
+    -> select 'B Class';
+    -> else
+    -> select 'A Class';
+    -> end if;
+    -> End loop emp_loop;
+    -> close c1;
+    -> end$$
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> create procedure empcursor()
+    -> begin
+    -> declare id int;
+    -> declare sal int;
+    -> declare flag int default 0;
+    -> declare c1 cursor for select empid, salary from employee;
+    -> declare continue handler for not found set flag=1;
+    -> open c1;
+    -> emp_loop :  loop
+    -> Fetch c1 into id,sal;
+    -> If flag = 1 then
+    -> Leave emp_loop;
+    -> End if;
+    -> if sal < 22000 then
+    -> select 'C Class';
+    -> elseif sal > 22000 and sal < 25000 then
+    -> select 'B Class';
+    -> else
+    -> select 'A Class';
+    -> end if;
+    -> End loop emp_loop;
+    -> close c1;
+    -> end$$
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> call empcursor()$$
++---------+
+| C Class |
++---------+
+| C Class |
++---------+
+1 row in set (0.00 sec)
+
++---------+
+| C Class |
++---------+
+| C Class |
++---------+
+1 row in set (0.07 sec)
+
++---------+
+| A Class |
++---------+
+| A Class |
++---------+
+1 row in set (0.08 sec)
+
++---------+
+| A Class |
++---------+
+| A Class |
++---------+
+1 row in set (0.09 sec)
+
+Query OK, 0 rows affected (0.11 sec)

@@ -1,0 +1,143 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+Write a database trigger (Row level and statement level) 
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| department     |
+| employee       |
+| v1             |
+| v2             |
+| v3             |
+| v4             |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  18025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  22005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  26418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  28521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.01 sec)
+
+mysql> select * from department;
++-----+--------+
+| DID | dname  |
++-----+--------+
+|   1 | ENTC   |
+|   3 | ENTC   |
+|   4 | IT     |
+|   6 | COMP-A |
+|   8 | IT     |
+|   9 | COMP-B |
++-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> create table empaudit(id int, sal int);
+Query OK, 0 rows affected (0.86 sec)
+
+mysql> delimiter $$
+mysql> create trigger empt1
+    -> before update on employee
+    -> for each row
+    -> begin
+    -> insert into empaudit values(old.empid, old.salary);
+    -> end$$
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> select * from empaudit$$
+Empty set (0.00 sec)
+
+mysql> update employee set salary=salary+2000$$
+Query OK, 4 rows affected (0.15 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from employee$$
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  20025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  24005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  28418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  30521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.01 sec)
+
+mysql> select * from empaudit$$
++------+-------+
+| id   | sal   |
++------+-------+
+| 1256 | 18025 |
+| 1257 | 22005 |
+| 1271 | 26418 |
+| 1222 | 28521 |
++------+-------+
+4 rows in set (0.03 sec)
+
+mysql> create table empb(E_id int, pay int);
+    -> $$
+Query OK, 0 rows affected (2.09 sec)
+
+mysql> create trigger empt2
+    -> before delete on employee
+    -> for each row
+    -> begin
+    -> insert into empb values(old.empid, old.salary);
+    -> end$$
+Query OK, 0 rows affected (0.51 sec)
+
+mysql> delete from employee where empid=1222$$
+Query OK, 1 row affected (0.33 sec)
+
+mysql> select * from empb$$
++------+-------+
+| E_id | pay   |
++------+-------+
+| 1222 | 30521 |
++------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee$$
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  20025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  24005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  28418 |    3 |    4 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> create trigger empt3
+    -> before update on employee
+    -> for each row
+    -> begin
+    -> if new.salary>20000 then
+    -> set new.salary=20000;
+    -> end if;
+    -> end$$
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> select * from employee$$
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  20025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  24005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  28418 |    3 |    4 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+3 rows in set (0.24 sec)
+
+mysql> drop trigger empt3$$
+Query OK, 0 rows affected (0.44 sec)

@@ -1,0 +1,147 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+Execute DDL statements which demonstrate use of Views.
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> use mydb;
+Database changed
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| employee       |
++----------------+
+1 row in set (1.16 sec)
+
+mysql> create table Department(DID int primary key, dname varchar(20));
+Query OK, 0 rows affected (2.90 sec)
+
+mysql> desc Department;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| DID   | int         | NO   | PRI | NULL    |       |
+| dname | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.23 sec)
+
+mysql> insert into Department values
+    -> (4,'IT')
+    -> ;
+Query OK, 1 row affected (0.29 sec)
+
+mysql> insert into Department values
+    -> (8,'IT')
+    -> ;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into Department values
+    -> (1,'ENTC');
+Query OK, 1 row affected (0.34 sec)
+
+mysql> insert into Department values
+    -> (3,'ENTC');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Department values
+    -> (6,'COMP-A');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> select * from Department;
++-----+--------+
+| DID | dname  |
++-----+--------+
+|   1 | ENTC   |
+|   3 | ENTC   |
+|   4 | IT     |
+|   6 | COMP-A |
+|   8 | IT     |
++-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  24523 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.52 sec)
+
+mysql> create view v1 as select empid, salary from employee;
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> desc v1;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| empid  | int  | YES  |     | NULL    |       |
+| salary | int  | YES  |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+2 rows in set (0.09 sec)
+
+mysql> insert into v1 values(6214,10456);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> update v1 set salary = 25418 where empid = 1271;
+Query OK, 1 row affected (0.22 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into Department values
+    -> (9,'COMP-B');
+Query OK, 1 row affected (0.25 sec)
+
+mysql> create view v3 as select did, sum(salary) from employee group by did;
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> create view v4 as select * from employee where salary in (select max(salary) from employee);
+Query OK, 0 rows affected (0.68 sec)
+
+mysql> create view v2 as select ename, dname from employee, Department where employee.did=Department.DID;
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> select * from v1;
++-------+--------+
+| empid | salary |
++-------+--------+
+|  1256 |  17025 |
+|  1257 |  21005 |
+|  1271 |  25418 |
+|  1222 |  27521 |
+|  6214 |  10456 |
++-------+--------+
+5 rows in set (0.04 sec)
+
+mysql> select * from v2;
++--------------+-------+
+| ename        | dname |
++--------------+-------+
+| Aditya Rathi | ENTC  |
+| Binod        | IT    |
++--------------+-------+
+2 rows in set (0.12 sec)
+
+mysql> select * from v3;
++------+-------------+
+| did  | sum(salary) |
++------+-------------+
+|    5 |       44546 |
+|    1 |       21005 |
+|    4 |       25418 |
+| NULL |       10456 |
++------+-------------+
+4 rows in set (0.05 sec)
+
+mysql> select * from v4;
++-------+---------+-----------+------------+------------+--------+------+------+
+| empid | ename   | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+---------+-----------+------------+------------+--------+------+------+
+|  1222 | Anushka |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+---------+-----------+------------+------------+--------+------+------+
+1 row in set (0.04 sec)

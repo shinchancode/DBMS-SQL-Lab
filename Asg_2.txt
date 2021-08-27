@@ -1,0 +1,141 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+
+Design and implement a database (for assignment 1) using DDL statements and apply normalization on the.
+Multinational Company Manages information of Employees. Each Employee has unique ID. Each Employee works on project in some department
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> create database mydb;
+Query OK, 1 row affected (0.91 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
+Empty set (0.61 sec)
+
+mysql> create table Employee(Emp_id int, Ename varchar(20),Address varchar(20));
+Query OK, 0 rows affected (2.31 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| employee       |
++----------------+
+1 row in set (0.16 sec)
+
+mysql> desc Employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Emp_id  | int         | YES  |     | NULL    |       |
+| Ename   | varchar(20) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.13 sec)
+
+mysql> desc Employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Emp_id  | int         | YES  |     | NULL    |       |
+| Ename   | varchar(20) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Employee values(1256,'Aarti Rathi','Khadki Pune');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> desc Employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Emp_id  | int         | YES  |     | NULL    |       |
+| Ename   | varchar(20) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.22 sec)
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
++--------+-------------+-------------+
+1 row in set (0.11 sec)
+
+mysql> insert into Employee values(1256,'Mini','AIT Pune');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
+|   1256 | Mini        | AIT Pune    |
++--------+-------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Employee values
+    -> (8563,'Aditya','Aundh Pune');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
+|   1256 | Mini        | AIT Pune    |
+|   8563 | Aditya      | Aundh Pune  |
++--------+-------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> update Employee
+    -> set Emp_id=7834
+    -> where Ename='Mini';
+Query OK, 1 row affected (0.23 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
+|   7834 | Mini        | AIT Pune    |
+|   8563 | Aditya      | Aundh Pune  |
++--------+-------------+-------------+
+3 rows in set (0.04 sec)
+
+mysql> insert into Employee
+    -> values(1489,'Sahil','Mumbai');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
+|   7834 | Mini        | AIT Pune    |
+|   8563 | Aditya      | Aundh Pune  |
+|   1489 | Sahil       | Mumbai      |
++--------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from Employee
+    -> where Ename='Sahil';
+Query OK, 1 row affected (0.30 sec)
+
+mysql> select * from Employee;
++--------+-------------+-------------+
+| Emp_id | Ename       | Address     |
++--------+-------------+-------------+
+|   1256 | Aarti Rathi | Khadki Pune |
+|   7834 | Mini        | AIT Pune    |
+|   8563 | Aditya      | Aundh Pune  |
++--------+-------------+-------------+
+
+3 rows in set (0.09 sec)

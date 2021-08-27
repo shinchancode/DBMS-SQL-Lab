@@ -1,0 +1,282 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+
+Perform following SQL queries on the database created in assignment 1.
+• Implementation of relational operators in SQL
+• Boolean operators and pattern matching
+• Arithmetic operations and built in functions
+• Group functions
+• Processing Date and Time functions
+• Complex queries and set operators
+
+----------------------------------------------------------------------------------------------------------------
+
+mysql> create table Employee(empid int, ename varchar(20), contactno int, DOB date, DOJ date, salary int,Pid int ,did int);
+Query OK, 0 rows affected (1.18 sec)
+
+mysql> insert into Employee values(1256,'Aarti Rathi',77852,17/10/2000,12/12/2019,17025,2,5);
+Query OK, 1 row affected (0.48 sec)
+
+mysql> insert into Employee values(1257,'Aditya Rathi',96890,10/11/2002,12/11/2017,21005,4,1);
+Query OK, 1 row affected (0.43 sec)
+
+mysql> insert into Employee values(1271,'Binod',78523,10/08/1995,12/05/2015,24523,3,4);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into Employee values(1222,'Anushka',77453,01/04/1998,14/01/2018,27521,1,5);
+Query OK, 1 row affected (0.24 sec)
+
+mysql> select * from Employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 0000-00-00 | 0000-00-00 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 0000-00-00 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 0000-00-00 | 0000-00-00 |  24523 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 0000-00-00 | 0000-00-00 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> update Employee
+    -> set DOB = '2000-10-17'
+    -> where ename='Aarti Rathi';
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+where ename='Aditya Rathi'' at line 3
+
+mysql> update Employee
+    -> set DOB = '2000-10-17'
+    -> where ename='Aarti Rathi';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update Employee
+    -> set DOB = '1995-08-10'
+    -> where ename='Binod';
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set DOB = '1998-04-01'
+    -> where ename='Anushka';
+Query OK, 1 row affected (0.39 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set DOJ = '2019-12-12'
+    -> where ename='Anushka';
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set DOJ = '2017-10-14'
+    -> where ename='Aarti Rathi';
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set DOJ = '2014-03-27'
+    -> where ename='Aditya Rathi';
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set DOJ = '2018-07-11'
+    -> where ename='Binod';
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  24523 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Employee where salary >=25000;
++-------+---------+-----------+------------+------------+--------+------+------+
+| empid | ename   | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+---------+-----------+------------+------------+--------+------+------+
+|  1222 | Anushka |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+---------+-----------+------------+------------+--------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employee where ename like '__';
+Empty set (0.10 sec)
+
+mysql> select * from Employee where ename like '_____';
++-------+-------+-----------+------------+------------+--------+------+------+
+| empid | ename | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+-------+-----------+------------+------------+--------+------+------+
+|  1271 | Binod |     78523 | 1995-08-10 | 2018-07-11 |  24523 |    3 |    4 |
++-------+-------+-----------+------------+------------+--------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employee where ename like'%n';
+Empty set (0.00 sec)
+
+mysql> select * from Employee where ename like'%A';
++-------+---------+-----------+------------+------------+--------+------+------+
+| empid | ename   | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+---------+-----------+------------+------------+--------+------+------+
+|  1222 | Anushka |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+---------+-----------+------------+------------+--------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select ucase(ename) from Employee;
++--------------+
+| ucase(ename) |
++--------------+
+| AARTI RATHI  |
+| ADITYA RATHI |
+| BINOD        |
+| ANUSHKA      |
++--------------+
+4 rows in set (0.02 sec)
+
+mysql> select length(ename) from Employee;
++---------------+
+| length(ename) |
++---------------+
+|            11 |
+|            12 |
+|             5 |
+|             7 |
++---------------+
+4 rows in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2021-03-01 12:43:41 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select date('2021-03-01 12:43:52');
++-----------------------------+
+| date('2021-03-01 12:43:52') |
++-----------------------------+
+| 2021-03-01                  |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select time(now());
++-------------+
+| time(now()) |
++-------------+
+| 12:44:59    |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select bin(contactno) from Employee;
++-------------------+
+| bin(contactno)    |
++-------------------+
+| 10011000000011100 |
+| 10111101001111010 |
+| 10011001010111011 |
+| 10010111010001101 |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select abs(contactno) from Employee;
++----------------+
+| abs(contactno) |
++----------------+
+|          77852 |
+|          96890 |
+|          78523 |
+|          77453 |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> select substr(ename,1,4) from Employee;
++-------------------+
+| substr(ename,1,4) |
++-------------------+
+| Aart              |
+| Adit              |
+| Bino              |
+| Anus              |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(salary) from Employee;
++-------------+
+| sum(salary) |
++-------------+
+|       90074 |
++-------------+
+1 row in set (0.13 sec)
+
+mysql> select avg(salary) from Employee;
++-------------+
+| avg(salary) |
++-------------+
+|  22518.5000 |
++-------------+
+1 row in set (0.11 sec)
+
+mysql> select count(salary) from Employee;
++---------------+
+| count(salary) |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) from Employee;
++-------------+
+| min(salary) |
++-------------+
+|       17025 |
++-------------+
+1 row in set (0.19 sec)
+
+mysql> select count(salary) from Employee where DOJ between '2012-01-01' and '2015-12-01';
++---------------+
+| count(salary) |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.10 sec)
+
+mysql> select did, min(salary) from Employee group by did;;
++------+-------------+
+| did  | min(salary) |
++------+-------------+
+|    5 |       17025 |
+|    1 |       21005 |
+|    4 |       24523 |
++------+-------------+
+3 rows in set (0.11 sec)
+
+
+mysql> select did, min(salary) from Employee group by did;
++------+-------------+
+| did  | min(salary) |
++------+-------------+
+|    5 |       17025 |
+|    1 |       21005 |
+|    4 |       24523 |
++------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employee natural join Department;
++------+-------+---------+-----------+------------+------------+------------+--------+
+empid  | ename           | contact    | dob        | doj        | salary | pid  | dname|
+-------+---------+------------+------------+------------+--------+------+-------+      |
+| 1256 | Aarti Rathi     | 77582      | 2000-10-17 | 2017-10-14 | 17025  |    1 | IT   |
+| 1257 | Aditya Rathi    | 96890      | 0000-00-00 | 2014-03-27 |  21005 |    2 | Comp |
+| 1271 | Binod  	 | 78523      | 1995-08-10 | 2018-07-11 |  24523 |    3 | mech |
+| 1222 | Anushka   	 | 77453      | 1998-04-01 | 2019-12-12 |  27521 |    4 | entc |
++------+-------+---------+-----------+------------+------------+------------+-------+
+4 rows in set (0.01 sec)

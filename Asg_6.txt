@@ -1,0 +1,168 @@
+AARTI RATHI
+My website - https://aartirathi17.herokuapp.com/ 
+
+Problem Statement :
+Write and execute PL/SQL stored procedure and function to perform a suitable task on the database.  
+
+-----------------------------------------------------------------------------------------------------------------
+
+mysql> use mydb;
+Database changed
+mysql> select * from employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  25418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
+|  6214 | NULL         |      NULL | NULL       | NULL       |  10456 | NULL | NULL |
++-------+--------------+-----------+------------+------------+--------+------+------+
+5 rows in set (6.15 sec)
+
+mysql> delete from employee
+    -> where empid = 6214;
+Query OK, 1 row affected (1.40 sec)
+
+mysql> select * from employee;
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  25418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> select * from employee;
+    -> $$
++-------+--------------+-----------+------------+------------+--------+------+------+
+| empid | ename        | contactno | DOB        | DOJ        | salary | Pid  | did  |
++-------+--------------+-----------+------------+------------+--------+------+------+
+|  1256 | Aarti Rathi  |     77852 | 2000-10-17 | 2017-10-14 |  17025 |    2 |    5 |
+|  1257 | Aditya Rathi |     96890 | 0000-00-00 | 2014-03-27 |  21005 |    4 |    1 |
+|  1271 | Binod        |     78523 | 1995-08-10 | 2018-07-11 |  25418 |    3 |    4 |
+|  1222 | Anushka      |     77453 | 1998-04-01 | 2019-12-12 |  27521 |    1 |    5 |
++-------+--------------+-----------+------------+------------+--------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> drop procedure if exists helloworld$$
+Query OK, 0 rows affected, 1 warning (0.49 sec)
+
+mysql> create procedure helloworld()
+    -> begin
+    -> select "Hello World";
+    -> end$$
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> call helloworld()$$
++-------------+
+| Hello World |
++-------------+
+| Hello World |
++-------------+
+1 row in set (0.13 sec)
+
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> create procedure funsqrt(num1 int)
+    -> begin
+    -> declare result int;
+    -> set result = sqrt(num1);
+    -> select result;
+    -> end$$
+Query OK, 0 rows affected (0.51 sec)
+
+mysql> call funsqrt(4)$$
++--------+
+| result |
++--------+
+|      2 |
++--------+
+1 row in set (0.06 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create procedure oddeven(num1 int)
+    -> begin
+    -> if mod(num1,2)=0 then
+    -> select "Even number";
+    -> else
+    -> select "Odd number";
+    -> end if;
+    -> end$$
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> call oddeven(4)$$
++-------------+
+| Even number |
++-------------+
+| Even number |
++-------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call oddeven(15)$$
++------------+
+| Odd number |
++------------+
+| Odd number |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create function funsqrt(num1 int)
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare result int;
+    -> set result = sqrt(num1);
+    -> return result;
+    -> end$$
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> select funsqrt(49)$$
++-------------+
+| funsqrt(49) |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.09 sec)
+
+mysql> create procedure classemp(eid int)
+    -> begin
+    -> declare sal int;
+    -> select salary into sal from employee where empid=eid;
+    -> if sal<25000 then
+    -> select "class X";
+    -> end if;
+    -> end$$
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> call classemp(1)$$
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> call classemp(4)$$
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> create function classemp(eid int)
+    -> returns varchar(20)
+    -> deterministic
+    -> begin
+    -> declare sal int;
+    -> declare class varchar(20);
+    -> select salary into sal from employee where empid=eid;
+    -> if sal<25000 then
+    -> set class = "class X";
+    -> end if;
+    -> return class;
+    -> end$$
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> call classemp(2)$$
+Query OK, 0 rows affected (0.00 sec)
