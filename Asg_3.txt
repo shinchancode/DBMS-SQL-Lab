@@ -1,11 +1,11 @@
 AARTI RATHI
-My website - https://aartirathi17.herokuapp.com/ 
+My website - https://shinchancode.github.io/3d-react-portfolio/
 
 Problem Statement :
 
 Create table with primary key and foreign key constraint.
-a Alter table with add and modify 
-b. Drop Table
+[a] Alter table with add and modify 
+[b] Drop Table
 
 -----------------------------------------------------------------------------------------------------------------
 
