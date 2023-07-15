@@ -1,4 +1,10 @@
-# DBMS-SQL-Lab
+<h1 align="middle"> :grey_exclamation: DBMS-SQL-Lab :grey_exclamation: </h1>
+<p align ="middle"> This is a repository for DBMS Lab assignments in Second year Information Technology of SPPU! <br>
+<b><i>Do star ⭐ this Repository if you feel it helped & drop a follow!</b></i><br><br>
+:blue_heart: <b> Happy Learning </b> :blue_heart:
+<br></p>
+
+#
 Language used : MYSQL
 
 Database Management System (SEM-4) - ER/EER Diagram, DDL statements, primary key and foreign key constraint., SQL queries with different functions, Views, PL/SQL,  Trigger (Row level and statement level) and cursor. 
